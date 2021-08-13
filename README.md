@@ -6,12 +6,14 @@ First you need to create a view with a binding property of ``CLLocationCoordinat
 The user is now free to navigate around the map and select the location. Once pressed anywhere on the map, an annotation will appear on the map while coordinates are always displayed in real time at the bottom of the screen.
 You can also provide a custom text to tell the user what to do.
 
-<img src="./Resources/example.png" width=300>
+<div align="center">
+	<img src="./Resources/Overview.png" width=800>
+</div>
 
 
 ## Example
 
-Here's a short usage example. You can find the full code in [UsageExample.swift](https://github.com/alessiorubicini/LocationPickerForSwiftUI/Sources/LocationPicker/UsageExample.swift)
+Here's a short usage example. You can find the full code in [UsageExample.swift](https://github.com/alessiorubicini/LocationPickerForSwiftUI/blob/master/Sources/LocationPicker/UsageExample.swift)
 
 ```swift
 @State private var coordinates = CLLocationCoordinate2D(latitude: 37.333747, longitude: -122.011448)
