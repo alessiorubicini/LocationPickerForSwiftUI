@@ -59,6 +59,6 @@ Then choose the main branch (versions support coming soon).
 
 Copyright 2021 (©) Alessio Rubicini.
 
-The license for this repository is [GNU Affero General Public License versione 3](https://www.gnu.org/licenses/agpl-3.0.html) (SPDX: AGPL-3.0).
+The license for this repository is MIT License.
 
 Please see the [LICENSE](LICENSE) file for full reference.
