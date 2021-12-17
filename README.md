@@ -1,6 +1,6 @@
 # LocationPicker for SwiftUI
 
-`LocationPicker for SwiftUI` is a simple and lightweight Swift package that provides a SwiftUI view for interactive input of geographic coordinates!
+`LocationPicker for SwiftUI` is a simple and lightweight Swift package that provides a SwiftUI view for interactive input of geographic coordinates.
 
 ## Usage
 
@@ -54,10 +54,11 @@ Required:
 In Xcode go to `File -> Swift Packages -> Add Package Dependency` and paste in the repo's url: `https://github.com/alessiorubicini/LocationPickerForSwiftUI`.
 Then choose the main branch (versions support coming soon).
 
+
 ## License
 
-### Authors/Copyright
+Copyright 2021 (©) Alessio Rubicini.
 
+The license for this repository is [GNU Affero General Public License versione 3](https://www.gnu.org/licenses/agpl-3.0.html) (SPDX: AGPL-3.0).
 
-### License details
-The license for this repository is [GNU Affero General Public License versione 3](https://www.gnu.org/licenses/agpl-3.0.html) (SPDX: AGPL-3.0). Please see the [LICENSE](LICENSE) file for full reference.
+Please see the [LICENSE](LICENSE) file for full reference.
