@@ -45,6 +45,7 @@ var body: some View {
 }
 ```
 
+
 ## Installation
 
 Required:
@@ -57,7 +58,7 @@ Then choose the main branch (versions support coming soon).
 
 ## License
 
-Copyright 2021 (©) Alessio Rubicini.
+Copyright 2022 (©) Alessio Rubicini.
 
 The license for this repository is MIT License.
 
