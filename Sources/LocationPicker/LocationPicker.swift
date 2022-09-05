@@ -25,7 +25,7 @@ public struct LocationPicker: View {
     /// - Parameters:
     ///   - instructions: label to display on screen
     ///   - coordinates: binding to latitude/longitude coordinates
-    public init(instructions: String, coordinates: Binding<CLLocationCoordinate2D>, dismissOnSelection: Bool = false) {
+    public init(instructions: String = "", coordinates: Binding<CLLocationCoordinate2D>, dismissOnSelection: Bool = false) {
         self.instructions = instructions
         self._coordinates = coordinates
         self.dismissOnSelection = dismissOnSelection
@@ -51,9 +51,13 @@ public struct LocationPicker: View {
             
             VStack {
                 
-                Text(instructions)
-                    .padding().background(VisualEffectView(effect: UIBlurEffect(style: .systemThinMaterial)).cornerRadius(20))
-                    .padding(.top, 10)
+                if !instructions.isEmpty {
+                    Text(self.instructions)
+                        .padding()
+                        .background(VisualEffectView(effect: UIBlurEffect(style: .systemThinMaterial))
+                        .cornerRadius(20))
+                        .padding(.top, 10)
+                }
                     
                 Spacer()
                 
