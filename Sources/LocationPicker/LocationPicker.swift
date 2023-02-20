@@ -19,26 +19,28 @@ public struct LocationPicker: View {
     @Binding var coordinates: CLLocationCoordinate2D
     @State private var alert = (false, "")
     let dismissOnSelection: Bool
-    
+    let safeAreaEdges: Edge.Set
     
     /// Initialize LocationPicker view
     /// - Parameters:
     ///   - instructions: label to display on screen
     ///   - coordinates: binding to latitude/longitude coordinates
-    public init(instructions: String = "", coordinates: Binding<CLLocationCoordinate2D>, dismissOnSelection: Bool = false) {
+    public init(instructions: String = "", coordinates: Binding<CLLocationCoordinate2D>, dismissOnSelection: Bool = false, safeAreaEdges: Edge.Set = .vertical) {
         self.instructions = instructions
         self._coordinates = coordinates
         self.dismissOnSelection = dismissOnSelection
+        self.safeAreaEdges = safeAreaEdges
     }
     /// Initialize LocationPicker view
     /// - Parameters:
     ///   - instructions: localized key of the text to display on screen
     ///   - coordinates: binding to latitude/longitude coordinates
     ///   - dismissOnSelection: automatically dismiss the view when new coordinates are selected
-    public init(instructions: LocalizedStringKey, coordinates: Binding<CLLocationCoordinate2D>, dismissOnSelection: Bool = false) {
+    public init(instructions: LocalizedStringKey, coordinates: Binding<CLLocationCoordinate2D>, dismissOnSelection: Bool = false, safeAreaEdges: Edge.Set = .vertical) {
         self.instructions = instructions.toString()
         self._coordinates = coordinates
         self.dismissOnSelection = dismissOnSelection
+        self.safeAreaEdges = safeAreaEdges
     }
     
     // MARK: - View body
@@ -47,7 +49,7 @@ public struct LocationPicker: View {
         ZStack {
             
             MapView(centerCoordinate: $coordinates)
-                .edgesIgnoringSafeArea(.vertical)
+                .edgesIgnoringSafeArea(safeAreaEdges)
             
             VStack {
                 
