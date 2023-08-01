@@ -13,12 +13,19 @@ import CoreLocation
 struct MapView: UIViewRepresentable {
     
     @Binding var centerCoordinate: CLLocationCoordinate2D
-
+    var zoomLevel: Double?
+    
     let mapView = MKMapView()
 
     func makeUIView(context: Context) -> MKMapView {
         mapView.delegate = context.coordinator
         mapView.centerCoordinate = self.centerCoordinate
+        
+        if let zoomLevel = zoomLevel {
+            let region = MKCoordinateRegion(center: self.centerCoordinate, latitudinalMeters: zoomLevel, longitudinalMeters: zoomLevel)
+            mapView.setRegion(mapView.regionThatFits(region), animated: true)
+        }
+       
         return mapView
     }
 
