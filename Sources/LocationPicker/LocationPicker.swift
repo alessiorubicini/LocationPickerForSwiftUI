@@ -14,7 +14,8 @@ public struct LocationPicker: View {
     // MARK: - View properties
     
     @Environment(\.presentationMode) var presentationMode
-    
+    @StateObject private var locationManager = LocationManager()
+
     let instructions: String
     @Binding var coordinates: CLLocationCoordinate2D
     var zoomLevel: Double?
@@ -73,13 +74,24 @@ public struct LocationPicker: View {
                     
                 Spacer()
                 
-                Text("\(coordinates.latitude), \(coordinates.longitude)")
-                    .padding()
-                    .background(VisualEffectView(effect: UIBlurEffect(style: .systemThinMaterial)).cornerRadius(20))
-                    .onTapGesture {
-                        UIPasteboard.general.setValue("\(coordinates.latitude), \(coordinates.longitude)", forPasteboardType: kUTTypePlainText as String)
+            
+                Button(action: {
+                    let status = CLLocationManager.authorizationStatus()
+                    if status == .notDetermined {
+                        locationManager.cl_locationManager.requestWhenInUseAuthorization()
+                    } else {
+                        locationManager.startUpdatingLocations()
                     }
-                
+                    if let location = locationManager.currentLocation {
+                        coordinates = location.coordinate
+                    }
+                }) {
+                    Image(systemName: "location.fill")
+                            .resizable()
+                            .aspectRatio(contentMode: .fit)
+                            .frame(width: 40, height: 40)
+                            .background(VisualEffectView(effect: UIBlurEffect(style: .systemThinMaterial)).cornerRadius(20))
+                }
             }.padding()
             
         }
