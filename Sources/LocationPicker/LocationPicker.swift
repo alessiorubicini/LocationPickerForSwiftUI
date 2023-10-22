@@ -14,9 +14,11 @@ public struct LocationPicker: View {
     // MARK: - View properties
     
     @Environment(\.presentationMode) var presentationMode
-    
+    @StateObject private var locationManager = LocationManager()
+
     let instructions: String
     @Binding var coordinates: CLLocationCoordinate2D
+    var zoomLevel: Double?
     @State private var alert = (false, "")
     let dismissOnSelection: Bool
     
@@ -25,19 +27,29 @@ public struct LocationPicker: View {
     /// - Parameters:
     ///   - instructions: label to display on screen
     ///   - coordinates: binding to latitude/longitude coordinates
-    public init(instructions: String = "", coordinates: Binding<CLLocationCoordinate2D>, dismissOnSelection: Bool = false) {
+    ///   - zoomLevel: desired zoom level to initlize map
+    public init(instructions: String = "",
+                coordinates: Binding<CLLocationCoordinate2D>,
+                zoomLevel: Double? = nil,
+                dismissOnSelection: Bool = false) {
         self.instructions = instructions
         self._coordinates = coordinates
+        self.zoomLevel = zoomLevel
         self.dismissOnSelection = dismissOnSelection
     }
     /// Initialize LocationPicker view
     /// - Parameters:
     ///   - instructions: localized key of the text to display on screen
     ///   - coordinates: binding to latitude/longitude coordinates
+    ///   - zoomLevel: desired zoom level to initlize map
     ///   - dismissOnSelection: automatically dismiss the view when new coordinates are selected
-    public init(instructions: LocalizedStringKey, coordinates: Binding<CLLocationCoordinate2D>, dismissOnSelection: Bool = false) {
+    public init(instructions: LocalizedStringKey,
+                coordinates: Binding<CLLocationCoordinate2D>,
+                zoomLevel: Double? = nil,
+                dismissOnSelection: Bool = false) {
         self.instructions = instructions.toString()
         self._coordinates = coordinates
+        self.zoomLevel = zoomLevel
         self.dismissOnSelection = dismissOnSelection
     }
     
@@ -46,7 +58,8 @@ public struct LocationPicker: View {
     public var body: some View {
         ZStack {
             
-            MapView(centerCoordinate: $coordinates)
+            MapView(centerCoordinate: $coordinates,
+                    zoomLevel: zoomLevel)
                 .edgesIgnoringSafeArea(.vertical)
             
             VStack {
@@ -61,13 +74,24 @@ public struct LocationPicker: View {
                     
                 Spacer()
                 
-                Text("\(coordinates.latitude), \(coordinates.longitude)")
-                    .padding()
-                    .background(VisualEffectView(effect: UIBlurEffect(style: .systemThinMaterial)).cornerRadius(20))
-                    .onTapGesture {
-                        UIPasteboard.general.setValue("\(coordinates.latitude), \(coordinates.longitude)", forPasteboardType: kUTTypePlainText as String)
+            
+                Button(action: {
+                    let status = CLLocationManager.authorizationStatus()
+                    if status == .notDetermined {
+                        locationManager.cl_locationManager.requestWhenInUseAuthorization()
+                    } else {
+                        locationManager.startUpdatingLocations()
                     }
-                
+                    if let location = locationManager.currentLocation {
+                        coordinates = location.coordinate
+                    }
+                }) {
+                    Image(systemName: "location.fill")
+                            .resizable()
+                            .aspectRatio(contentMode: .fit)
+                            .frame(width: 40, height: 40)
+                            .background(VisualEffectView(effect: UIBlurEffect(style: .systemThinMaterial)).cornerRadius(20))
+                }
             }.padding()
             
         }
