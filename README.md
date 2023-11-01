@@ -16,16 +16,21 @@ The user is now free to navigate around the map and select the location. Once pr
 Here's a short usage example. You can find the full code in [UsageExample.swift](https://github.com/alessiorubicini/LocationPickerForSwiftUI/blob/master/Sources/LocationPicker/UsageExample.swift)
 
 ```swift
-@State private var coordinates = CLLocationCoordinate2D(latitude: 37.333747, longitude: -122.011448)
-@State private var showSheet = false
+import SwiftUI
+import MapKit
+import LocationPicker
 
-var body: some View {
-    VStack {
-        Text("\(coordinates.latitude), \(coordinates.longitude)")
+struct Example: View {
+    @State private var coordinates = CLLocationCoordinate2D(latitude: 37.333747, longitude: -122.011448)
+    @State private var showSheet = false
+
+    var body: some View {
+        VStack {
+            Text("\(coordinates.latitude), \(coordinates.longitude)")
         
-        Button("Select location") {
-            self.showSheet.toggle()
-        }
+            Button("Select location") {
+                self.showSheet.toggle()
+            }
     }
 
     .sheet(isPresented: $showSheet) {
@@ -41,7 +46,7 @@ Required:
 - iOS 14.0 or above
 - Xcode 12.0 or above
 
-In Xcode go to `File` -> `Add Package Dependencies...` and paste in the repo's url: `https://github.com/alessiorubicini/LocationPickerForSwiftUI`.
+In Xcode go to `File -> Add Package Dependencies...` and paste in the repo's url: `https://github.com/alessiorubicini/LocationPickerForSwiftUI`.
 Then choose the main branch or the version you desire.
 
 
