@@ -30,6 +30,7 @@ public struct LocationPicker: View {
         self._coordinates = coordinates
         self.dismissOnSelection = dismissOnSelection
     }
+    
     /// Initialize LocationPicker view
     /// - Parameters:
     ///   - instructions: localized key of the text to display on screen
@@ -44,38 +45,54 @@ public struct LocationPicker: View {
     // MARK: - View body
     
     public var body: some View {
-        ZStack {
-            
-            MapView(centerCoordinate: $coordinates)
-                .edgesIgnoringSafeArea(.vertical)
-            
-            VStack {
+        NavigationView {
+            ZStack {
                 
-                if !instructions.isEmpty {
-                    Text(self.instructions)
-                        .padding()
-                        .background(VisualEffectView(effect: UIBlurEffect(style: .systemThinMaterial))
-                        .cornerRadius(20))
-                        .padding(.top, 10)
-                }
+                MapView(centerCoordinate: $coordinates)
+                    .edgesIgnoringSafeArea(.vertical)
+                
+                VStack {
+                        
+                    Spacer()
                     
-                Spacer()
+                    Text("\(coordinates.latitude), \(coordinates.longitude)")
+                        .padding()
+                        .background(VisualEffectView(effect: UIBlurEffect(style: .systemThinMaterial)).cornerRadius(20))
+                        .onTapGesture {
+                            self.pasteCoordinates()
+                        }
+                    
+                }.padding()
                 
-                Text("\(coordinates.latitude), \(coordinates.longitude)")
-                    .padding()
-                    .background(VisualEffectView(effect: UIBlurEffect(style: .systemThinMaterial)).cornerRadius(20))
-                    .onTapGesture {
-                        UIPasteboard.general.setValue("\(coordinates.latitude), \(coordinates.longitude)", forPasteboardType: kUTTypePlainText as String)
+            }
+            .navigationTitle(instructions)
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+                ToolbarItem(placement: .cancellationAction) {
+                    Button {
+                        presentationMode.wrappedValue.dismiss()
+                    } label: {
+                        Image(systemName: "xmark.circle.fill")
+                            
                     }
-                
-            }.padding()
-            
+                    
+                }
+            }
         }
+        .onChange(of: coordinates) { newValue in
+            if(dismissOnSelection) {
+                presentationMode.wrappedValue.dismiss()
+            }
+        }
+    }
+    
+    private func pasteCoordinates() {
+        UIPasteboard.general.setValue("\(coordinates.latitude), \(coordinates.longitude)", forPasteboardType: kUTTypePlainText as String)
     }
 }
 
 struct LocationPicker_Previews: PreviewProvider {
     static var previews: some View {
-        LocationPicker(instructions: "Tap to select your coordinates", coordinates: .constant(CLLocationCoordinate2D(latitude: 37.333747, longitude: -122.011448)))
+        LocationPicker(instructions: "Tap to select coordinates", coordinates: .constant(CLLocationCoordinate2D(latitude: 37.333747, longitude: -122.011448)))
     }
 }

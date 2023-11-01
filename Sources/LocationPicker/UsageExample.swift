@@ -16,37 +16,19 @@ struct UsageExample: View {
     
     var body: some View {
         NavigationView {
-            Form {
+            VStack {
                 
-                Section(header: Text("Info")) {
-                    Text("Developed by Alessio Rubicini")
-                }
+                Text("\(coordinates.latitude), \(coordinates.longitude)")
                 
-                Section(header: Text("Location")) {
-                    Text("\(coordinates.latitude), \(coordinates.longitude)")
-                    Button("Select location") {
-                        self.showSheet.toggle()
-                    }
+                Button("Select location") {
+                    self.showSheet.toggle()
                 }
                     
             }
             .navigationTitle("LocationPicker")
             
             .sheet(isPresented: $showSheet) {
-                NavigationView {
-                    
-                    // Just put the view into a sheet or navigation link
-                    LocationPicker(instructions: "Tap somewhere to select your coordinates", coordinates: $coordinates)
-                        
-                    // You can assign it some NavigationView modifiers
-                        .navigationTitle("Location Picker")
-                        .navigationBarTitleDisplayMode(.inline)
-                        .navigationBarItems(leading: Button(action: {
-                            self.showSheet.toggle()
-                        }, label: {
-                            Text("Close").foregroundColor(.red)
-                        }))
-                }
+                LocationPicker(instructions: "Tap to select coordinates", coordinates: $coordinates, dismissOnSelection: true)
             }
             
         }

@@ -45,23 +45,20 @@ struct MapView: UIViewRepresentable {
 
         @objc func tapHandler(_ gesture: UITapGestureRecognizer) {
             
-            // position on the screen, CGPoint
             let location = gRecognizer.location(in: self.parent.mapView)
-            // position on the map, CLLocationCoordinate2D
             let coordinate = self.parent.mapView.convert(location, toCoordinateFrom: self.parent.mapView)
             
+            // Set the selected coordinates
+            let clObject = CLLocationCoordinate2D(latitude: coordinate.latitude, longitude: coordinate.longitude)
+            parent.centerCoordinate = clObject
+            
+            // Place the pin on the map
+            let annotation = MKPointAnnotation()
+            annotation.coordinate = clObject
+            
             withAnimation {
-                let clObject = CLLocationCoordinate2D(latitude: coordinate.latitude, longitude: coordinate.longitude)
-                parent.centerCoordinate = clObject
-                
-                let annotation = MKPointAnnotation()
-                annotation.coordinate = clObject
-                
-                withAnimation {
-                    parent.mapView.removeAnnotations(parent.mapView.annotations)
-                    parent.mapView.addAnnotation(annotation)
-                }
-                
+                parent.mapView.removeAnnotations(parent.mapView.annotations)
+                parent.mapView.addAnnotation(annotation)
             }
             
         }

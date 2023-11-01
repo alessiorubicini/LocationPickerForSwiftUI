@@ -1,6 +1,6 @@
 # LocationPicker for SwiftUI
 
-`LocationPicker for SwiftUI` is a simple and lightweight Swift package that provides a SwiftUI view for interactive input of geographic coordinates.
+`LocationPicker for SwiftUI` is a Swift package that provides an easy-to-use SwiftUI view for interactive input of geographic coordinates.
 
 ## Usage
 
@@ -8,9 +8,7 @@ First you need to create a view with a ``@Binding`` property of ``CLLocationCoor
 
 The user is now free to navigate around the map and select the location. Once pressed anywhere on the map, an annotation will appear on the map while coordinates are always displayed in real time at the bottom of the screen. You can also provide a custom text to tell the user what to do.
 
-<div align="center">
-	<img src="./Resources/Overview.png" width=810>
-</div>
+![Location Picker](./Resources/LocationPickerForSwiftUI.png)
 
 
 ## Example
@@ -22,25 +20,16 @@ Here's a short usage example. You can find the full code in [UsageExample.swift]
 @State private var showSheet = false
 
 var body: some View {
-    Button("Select location") {
-        self.showSheet.toggle()
+    VStack {
+        Text("\(coordinates.latitude), \(coordinates.longitude)")
+        
+        Button("Select location") {
+            self.showSheet.toggle()
+        }
     }
 
     .sheet(isPresented: $showSheet) {
-        NavigationView {
-            
-            // Just put the view into a sheet or navigation link
-            LocationPicker(instructions: "Tap somewhere to select your coordinates", coordinates: $coordinates)
-                
-            // You can assign it some NavigationView modifiers
-                .navigationTitle("Location Picker")
-                .navigationBarTitleDisplayMode(.inline)
-                .navigationBarItems(leading: Button(action: {
-                    self.showSheet.toggle()
-                }, label: {
-                    Text("Close").foregroundColor(.red)
-                }))
-        }
+        LocationPicker(instructions: "Tap to select coordinates", coordinates: $coordinates, dismissOnSelection: true)
     }
 }
 ```
