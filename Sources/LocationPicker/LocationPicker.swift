@@ -1,6 +1,6 @@
 //
-//  SwiftUIView.swift
-//  
+//  LocationPicker.swift
+//
 //
 //  Created by Alessio Rubicini on 13/08/21.
 //
@@ -14,9 +14,11 @@ public struct LocationPicker: View {
     // MARK: - View properties
     
     @Environment(\.presentationMode) var presentationMode
+    @StateObject private var locationManager = LocationManager()
     
     let instructions: String
     @Binding var coordinates: CLLocationCoordinate2D
+    var zoomLevel: Double?
     @State private var alert = (false, "")
     let dismissOnSelection: Bool
     
@@ -25,9 +27,14 @@ public struct LocationPicker: View {
     /// - Parameters:
     ///   - instructions: label to display on screen
     ///   - coordinates: binding to latitude/longitude coordinates
-    public init(instructions: String = "", coordinates: Binding<CLLocationCoordinate2D>, dismissOnSelection: Bool = false) {
+    ///   - zoomLevel: desired zoom level to initlize map
+    public init(instructions: String = "",
+                coordinates: Binding<CLLocationCoordinate2D>,
+                zoomLevel: Double? = nil,
+                dismissOnSelection: Bool = false) {
         self.instructions = instructions
         self._coordinates = coordinates
+        self.zoomLevel = zoomLevel
         self.dismissOnSelection = dismissOnSelection
     }
     
@@ -35,24 +42,30 @@ public struct LocationPicker: View {
     /// - Parameters:
     ///   - instructions: localized key of the text to display on screen
     ///   - coordinates: binding to latitude/longitude coordinates
+    ///   - zoomLevel: desired zoom level to initlize map
     ///   - dismissOnSelection: automatically dismiss the view when new coordinates are selected
-    public init(instructions: LocalizedStringKey, coordinates: Binding<CLLocationCoordinate2D>, dismissOnSelection: Bool = false) {
+    public init(instructions: LocalizedStringKey,
+                coordinates: Binding<CLLocationCoordinate2D>,
+                zoomLevel: Double? = nil,
+                dismissOnSelection: Bool = false) {
         self.instructions = instructions.toString()
         self._coordinates = coordinates
+        self.zoomLevel = zoomLevel
         self.dismissOnSelection = dismissOnSelection
     }
     
     // MARK: - View body
     
     public var body: some View {
+        
         NavigationView {
             ZStack {
                 
-                MapView(centerCoordinate: $coordinates)
-                    .edgesIgnoringSafeArea(.vertical)
+                MapView(centerCoordinate: $coordinates, zoomLevel: zoomLevel)
+                .edgesIgnoringSafeArea(.vertical)
                 
                 VStack {
-                        
+                    
                     Spacer()
                     
                     Text("\(coordinates.latitude), \(coordinates.longitude)")
@@ -62,22 +75,39 @@ public struct LocationPicker: View {
                             self.pasteCoordinates()
                         }
                     
-                }.padding()
-                
-            }
-            .navigationTitle(instructions)
-            .navigationBarTitleDisplayMode(.inline)
-            .toolbar {
-                ToolbarItem(placement: .cancellationAction) {
-                    Button {
-                        presentationMode.wrappedValue.dismiss()
-                    } label: {
-                        Image(systemName: "xmark.circle.fill")
+                }
+                .navigationTitle(instructions)
+                .navigationBarTitleDisplayMode(.inline)
+                .toolbar {
+                    
+                    ToolbarItem(placement: .cancellationAction) {
+                        Button {
+                            presentationMode.wrappedValue.dismiss()
+                        } label: {
+                            Image(systemName: "xmark.circle.fill")
                             
+                        }
                     }
                     
+                    ToolbarItem(placement: .confirmationAction) {
+                        Button(action: {
+                            let status = self.locationManager.getAuthorizationStatus()
+                            if status == .notDetermined {
+                                locationManager.clLocationManager.requestWhenInUseAuthorization()
+                            } else {
+                                locationManager.startUpdatingLocations()
+                            }
+                            if let location = locationManager.currentLocation {
+                                coordinates = location.coordinate
+                            }
+                        }) {
+                            Image(systemName: "location.fill")
+                        }
+                    }
                 }
+                
             }
+            
         }
         .onChange(of: coordinates) { newValue in
             if(dismissOnSelection) {
