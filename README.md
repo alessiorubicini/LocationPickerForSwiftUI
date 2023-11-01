@@ -4,7 +4,7 @@
 
 ## Usage
 
-First you need to create a view with a ``@Binding`` property of ``CLLocationCoordinate2D`` type (remember to import the MapKit framework!) inside. This means that once the position is selected, coordinates are directly passed to your previous view through the powerful binding system of SwiftUI without any additional effort. Now put the ``LocationPicker`` view into a ``Sheet`` or a ``NavigationLink`` passing the binding value previously mentioned.
+All you need to do is to pass to the `LocationPicker` view a binding to a property of type `CLLocationCoordinate2D` (remember to import the MapKit framework!). This means that once the position is selected, coordinates are directly passed to your previous view through the powerful binding system of SwiftUI without any additional effort. Now put the `LocationPicker` view into a `Sheet` or a `NavigationLink` passing the binding value previously mentioned.
 
 The user is now free to navigate around the map and select the location. Once pressed anywhere on the map, an annotation will appear on the map while coordinates are always displayed in real time at the bottom of the screen. You can also provide a custom text to tell the user what to do.
 
