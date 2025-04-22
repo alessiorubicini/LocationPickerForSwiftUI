@@ -1,6 +1,27 @@
-# LocationPicker for SwiftUI
+<div align="center">
+  <img width="300" height="300" src="/assets/icon.png" alt="Package Logo">
+  <h1><b>Location Picker for SwiftUI</b></h1>
+  <p>
+    LocationPicker for SwiftUI is a Swift package that provides an easy-to-use SwiftUI view for interactive input of geographic coordinates.
+    <br>
+  </p>
+</div>
 
-`LocationPicker for SwiftUI` is a Swift package that provides an easy-to-use SwiftUI view for interactive input of geographic coordinates.
+<div align="center">
+  <a href="https://swift.org">
+<!--     <img src="https://img.shields.io/badge/Swift-5.9%20%7C%206-orange.svg" alt="Swift Version"> -->
+    <img src="https://img.shields.io/badge/Swift-5.7-orange.svg" alt="Swift Version">
+  </a>
+  <a href="https://www.apple.com/ios/">
+    <img src="https://img.shields.io/badge/iOS-14%2B-blue.svg" alt="iOS">
+  </a>
+  <a href="LICENSE">
+    <img src="https://img.shields.io/badge/License-MIT-green.svg" alt="License: MIT">
+  </a>
+</div>
+
+
+
 
 ## Usage
 
@@ -8,7 +29,7 @@ All you need to do is to pass to the `LocationPicker` view a binding to a proper
 
 The user is now free to navigate around the map and select the location. Once pressed anywhere on the map, an annotation will appear on the map while coordinates are always displayed in real time at the bottom of the screen. You can also provide a custom text to tell the user what to do.
 
-![Location Picker](./Resources/LocationPickerForSwiftUI.png)
+![Location Picker](./assets/LocationPickerForSwiftUI.png)
 
 
 ## Example
