@@ -29,7 +29,7 @@ All you need to do is to pass to the `LocationPicker` view a binding to a proper
 
 The user is now free to navigate around the map and select the location. Once pressed anywhere on the map, an annotation will appear on the map while coordinates are always displayed in real time at the bottom of the screen. You can also provide a custom text to tell the user what to do.
 
-![Location Picker](./assets/LocationPickerForSwiftUI.png)
+![Location Picker](./assets/LocationPickerPreview.png)
 
 
 ## Example
