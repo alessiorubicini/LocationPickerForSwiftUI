@@ -21,8 +21,6 @@
 </div>
 
 
-
-
 ## Usage
 
 All you need to do is to pass to the `LocationPicker` view a binding to a property of type `CLLocationCoordinate2D` (remember to import the MapKit framework!). This means that once the position is selected, coordinates are directly passed to your previous view through the powerful binding system of SwiftUI without any additional effort. Now put the `LocationPicker` view into a `Sheet` or a `NavigationLink` passing the binding value previously mentioned.
