@@ -1,4 +1,3 @@
-<div align="center">
   <img width="300" height="300" src="/assets/icon.png" alt="Package Logo">
   <h1><b>Location Picker for SwiftUI</b></h1>
   <p>
@@ -13,66 +12,42 @@
     <img src="https://img.shields.io/badge/Swift-5.7-orange.svg" alt="Swift Version">
   </a>
   <a href="https://www.apple.com/ios/">
-    <img src="https://img.shields.io/badge/iOS-14%2B-blue.svg" alt="iOS">
+    <img src="https://img.shields.io/badge/iOS-15%2B-blue.svg" alt="iOS">
   </a>
   <a href="LICENSE">
     <img src="https://img.shields.io/badge/License-MIT-green.svg" alt="License: MIT">
   </a>
 </div>
 
+## Overview
 
-## Usage
+LocationPicker is a lightweight SwiftUI component for selecting geographic coordinates with Apple Maps. Present it in a sheet or navigation flow, let users tap to drop a pin, and receive live coordinate updates via a simple binding.
 
-All you need to do is to pass to the `LocationPicker` view a binding to a property of type `CLLocationCoordinate2D` (remember to import the MapKit framework!). This means that once the position is selected, coordinates are directly passed to your previous view through the powerful binding system of SwiftUI without any additional effort. Now put the `LocationPicker` view into a `Sheet` or a `NavigationLink` passing the binding value previously mentioned.
+![Preview](./assets/LocationPickerPreview.png)
 
-The user is now free to navigate around the map and select the location. Once pressed anywhere on the map, an annotation will appear on the map while coordinates are always displayed in real time at the bottom of the screen. You can also provide a custom text to tell the user what to do.
+## Features
 
-![Location Picker](./assets/LocationPickerPreview.png)
+- **SwiftUI-first**: Drop-in view that fits sheets, forms, and navigation flows.
+- **Interactive map**: Tap to select a point; pin animates into place.
+- **Live coordinates**: Selected latitude/longitude always visible.
+- **Zero dependencies**: Built on MapKit and SwiftUI.
 
+## Requirements
 
-## Example
+- **iOS**: 15.0+
+- **Swift**: 5.7+
+- **Xcode**: 13.0+
 
-Here's a short usage example. You can find the full code in [UsageExample.swift](https://github.com/alessiorubicini/LocationPickerForSwiftUI/blob/master/Sources/LocationPicker/UsageExample.swift)
+## Installation (Swift Package Manager)
 
-```swift
-import SwiftUI
-import MapKit
-import LocationPicker
+1. In Xcode, go to `File > Add Package Dependencies…`.
+2. Enter the repository URL: `https://github.com/alessiorubicini/LocationPickerForSwiftUI`.
+3. Select the version or branch you prefer and add the package to your target.
 
-struct Example: View {
-    @State private var coordinates = CLLocationCoordinate2D(latitude: 37.333747, longitude: -122.011448)
-    @State private var showSheet = false
+## Support
 
-    var body: some View {
-        VStack {
-            Text("\(coordinates.latitude), \(coordinates.longitude)")
-        
-            Button("Select location") {
-                self.showSheet.toggle()
-            }
-    }
-
-    .sheet(isPresented: $showSheet) {
-        LocationPicker(instructions: "Tap to select coordinates", coordinates: $coordinates, dismissOnSelection: true)
-    }
-}
-```
-
-
-## Installation
-
-Required:
-- iOS 14.0 or above
-- Xcode 12.0 or above
-
-In Xcode go to `File -> Add Package Dependencies...` and paste in the repo's url: `https://github.com/alessiorubicini/LocationPickerForSwiftUI`.
-Then choose the main branch or the version you desire.
-
+Questions, ideas, or issues? Feel free to open an issue on GitHub.
 
 ## License
 
-Copyright 2022 (©) Alessio Rubicini.
-
-The license for this repository is MIT License.
-
-Please see the [LICENSE](LICENSE) file for full reference.
+MIT © 2022–present Alessio Rubicini. See [LICENSE](LICENSE) for details.
