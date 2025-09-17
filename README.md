@@ -1,3 +1,4 @@
+<div align="center">
   <img width="300" height="300" src="/assets/icon.png" alt="Package Logo">
   <h1><b>Location Picker for SwiftUI</b></h1>
   <p>
